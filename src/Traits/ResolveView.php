@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace DigitalCreative\NovaDashboard\Traits;
 
@@ -26,19 +26,22 @@ trait ResolveView
             /**
              * When there is a "resource" param on the url, we are able to infer the Resource from it
              */
-            !is_null($request->route('resource')) => $request->newResource()->availableCards($request),
+            !is_null($request->route('resource')) => collect($request->newResource()->cards()),
 
             /**
              * If the dashboard is placed on a Nova Resource we need to find which resource was it
              * And retrieve its available cards
              */
-            $controller instanceof CardController && $resolver => $resolver()->availableCards($request),
+            $controller instanceof CardController && $resolver => collect($resolver()->cards()),
 
             /**
              * When it is nova dashboard, we retrieve the cards from global nova helper function
              */
             $controller instanceof WidgetController,
-            $controller instanceof DashboardController => Nova::allAvailableDashboardCards($request),
+            $controller instanceof DashboardController => collect(Nova::dashboards())
+                            ->flatMap(fn ($dashboard) => $dashboard->cards()),
+
+
 
             /**
              * ¯\_(ツ)_/¯
