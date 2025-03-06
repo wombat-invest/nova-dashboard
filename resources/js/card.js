@@ -1,12 +1,13 @@
 import Card from './components/Card.vue'
 import { registerMixin, registerDashboardMixin } from './components/Mixin'
+import DashboardView from '@/views/Dashboard'
 
 Nova.booting(app => {
 
     const componentFn = app.component
 
     registerDashboardMixin(
-        Nova.pages[ 'Nova.Dashboard' ].components[ 'DashboardView' ],
+        DashboardView,
     )
 
     app.component = function (name, component) {

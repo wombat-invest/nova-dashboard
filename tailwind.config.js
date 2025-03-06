@@ -1,4 +1,4 @@
-const { theme, ...theRest } = require('../../vendor/laravel/nova/tailwind.config')
+const { theme, ...theRest } = require('../../vendor/laravel/nova/tailwind.config.js')
 
 module.exports = {
     ...theRest,
